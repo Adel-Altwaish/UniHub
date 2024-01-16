@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "223482781353",
-    "project_id": "unihub-d8428",
-    "storage_bucket": "unihub-d8428.appspot.com"
+    "project_number": "223401995351",
+    "project_id": "unihub-eecad",
+    "storage_bucket": "unihub-eecad.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:223482781353:android:e320fb4bf875d485e453b8",
+        "mobilesdk_app_id": "1:223401995351:android:14aeb15fc9ec2ca2160712",
         "android_client_info": {
           "package_name": "com.example.uni_hub"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "223482781353-4e6ig2st7ftbjhelaqilbdfd5jso8bgg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCJiv7T9SbnXrDttgSsal85diL76wxXE-Q"
+          "current_key": "AIzaSyA34vYH8_FS14Pffqis4MtN0kazNfx5lHA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "223482781353-4e6ig2st7ftbjhelaqilbdfd5jso8bgg.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
