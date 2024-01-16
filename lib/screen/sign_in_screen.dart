@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, avoid_unnecessary_containers, avoid_print, use_build_context_synchronously, body_might_complete_normally_nullable
+// ignore_for_file: prefer_const_constructors, unused_local_variable, avoid_unnecessary_containers, avoid_print, use_build_context_synchronously, body_might_complete_normally_nullable, dead_code
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
 
-    // Navigator.of(context).pushNamedAndRemoveUntil('HomePage', (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil('HomePage', (route) => false);
   }
 
   @override
