@@ -12,7 +12,12 @@
           "package_name": "com.example.uni_hub"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "223482781353-4e6ig2st7ftbjhelaqilbdfd5jso8bgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCJiv7T9SbnXrDttgSsal85diL76wxXE-Q"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223482781353-4e6ig2st7ftbjhelaqilbdfd5jso8bgg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

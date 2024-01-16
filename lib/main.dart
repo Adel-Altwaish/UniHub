@@ -9,9 +9,6 @@ import 'package:uni_hub/homepage.dart';
 import 'package:uni_hub/screen/sign_in_screen.dart';
 import 'package:uni_hub/screen/sign_up_screen.dart';
 
-// import '../screen/welcome_screen.dart';
-// import 'firebase_options.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Platform.isAndroid
@@ -62,12 +59,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
-
-
-
-
-      //   WelcomeScreen.screenRoute: (context) => WelcomeScreen(),
-      //   RegistrationScreen.screenRoute: (context) => RegistrationScreen(),
-      //   SectionsScreen.screenRoute: (context) => SectionsScreen(),
