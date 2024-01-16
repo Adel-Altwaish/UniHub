@@ -21,7 +21,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
 
-  Future<UserCredential> signInWithGoogle() async {
+  Future signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -36,7 +36,9 @@ class _SignInScreenState extends State<SignInScreen> {
     );
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    Navigator.of(context).pushNamedAndRemoveUntil('HomePage',(route)=> false);
   }
 
   @override
