@@ -19,7 +19,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  GlobalKey<FormState> formstate = GlobalKey<FormState>();
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   Future signInWithGoogle() async {
     // Trigger the authentication flow
@@ -38,7 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
 
-    Navigator.of(context).pushNamedAndRemoveUntil('HomePage',(route)=> false);
+    Navigator.pushNamedAndRemoveUntil(context, 'HomePage', (route) => false);
   }
 
   @override
@@ -53,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
           child: ListView(
             children: [
               Form(
-                key: formstate,
+                key: formState,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -120,7 +120,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 color: Colors.black,
                 title: Text('Login'),
                 onPressed: () async {
-                  if (formstate.currentState!.validate()) {
+                  if (formState.currentState!.validate()) {
                     try {
                       final credential = await FirebaseAuth.instance
                           .signInWithEmailAndPassword(
@@ -169,6 +169,9 @@ class _SignInScreenState extends State<SignInScreen> {
               // Container(height: 20),
               MyButton(
                 color: Color.fromARGB(255, 188, 49, 39),
+                onPressed: () {
+                  signInWithGoogle();
+                },
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -179,9 +182,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ],
                 ),
-                onPressed: () {
-                  signInWithGoogle();
-                },
               ),
               Container(height: 10),
               Row(
