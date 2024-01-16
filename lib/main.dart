@@ -14,10 +14,10 @@ void main() async {
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: FirebaseOptions(
-              apiKey: "AIzaSyCJiv7T9SbnXrDttgSsal85diL76wxXE-Q",
-              appId: "1:223482781353:android:e320fb4bf875d485e453b8",
-              messagingSenderId: "223482781353",
-              projectId: "unihub-d8428"))
+              apiKey: "AIzaSyA34vYH8_FS14Pffqis4MtN0kazNfx5lHA",
+              appId: "1:223401995351:android:14aeb15fc9ec2ca2160712",
+              messagingSenderId: "223401995351",
+              projectId: "unihub-eecad"))
       : await Firebase.initializeApp();
   runApp(MyApp());
 }
