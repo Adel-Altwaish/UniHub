@@ -48,11 +48,17 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // title: const Text('UniHub'),
+        backgroundColor: Colors.white,
+        title: Center(
+          child: Text(
+            'Welcome To UniHub',
+            style: TextStyle(fontSize: 30),
           ),
+        ),
+      ),
       body: Container(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ListView(
             children: [
               Form(

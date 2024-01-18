@@ -10,8 +10,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey,
         onPressed: () {
           Navigator.of(context).pushNamed('AddCategory');
         },
@@ -38,36 +39,32 @@ class HomePage extends StatelessWidget {
         children: [
           Card(
             child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     Image.asset(
-                      'images/1.jpg',
-                      height: 150,
+                      'images/4.png',
+                      height: 100,
                     ),
                     Text('المنبه'),
                   ],
                 ),
               ),
             ),
-          ),
           Card(
             child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     Image.asset(
-                      'images/1.jpg',
-                      height: 150,
+                      'images/3.png',
+                      height: 100,
                     ),
                     Text('المهام'),
                   ],
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
