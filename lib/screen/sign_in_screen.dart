@@ -142,7 +142,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 context: context,
                                 animType: AnimType.rightSlide,
                                 dialogType: DialogType.error,
-                                title: 'Success',
+                                title: 'Error',
                                 desc: 'There is no account for this email!',
                               ).show();
                             }
