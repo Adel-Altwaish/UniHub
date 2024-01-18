@@ -10,6 +10,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        onPressed: () {
+          Navigator.of(context).pushNamed('AddCategory');
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Center(child: Text("الأقســـــــام")),
         actions: [
@@ -25,7 +32,44 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(child: Center(child: Text('Welcome'))),
+      body: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, mainAxisExtent: 150),
+        children: [
+          Card(
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'images/1.jpg',
+                      height: 150,
+                    ),
+                    Text('المنبه'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Card(
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'images/1.jpg',
+                      height: 150,
+                    ),
+                    Text('المهام'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

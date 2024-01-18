@@ -111,7 +111,36 @@ class _SignInScreenState extends State<SignInScreen> {
                       padding: EdgeInsets.only(top: 5, bottom: 5),
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (email.text == '') {
+                              AwesomeDialog(
+                                context: context,
+                                animType: AnimType.rightSlide,
+                                dialogType: DialogType.error,
+                                title: 'Error',
+                                desc: 'Please Enter your email',
+                              ).show();
+                            }
+                            try {
+                              await FirebaseAuth.instance
+                                  .sendPasswordResetEmail(email: email.text);
+                              AwesomeDialog(
+                                context: context,
+                                animType: AnimType.rightSlide,
+                                dialogType: DialogType.success,
+                                title: 'Success',
+                                desc: 'Reset Password email Has been sent!',
+                              ).show();
+                            } catch (e) {
+                              AwesomeDialog(
+                                context: context,
+                                animType: AnimType.rightSlide,
+                                dialogType: DialogType.error,
+                                title: 'Success',
+                                desc: 'There is no account for this email!',
+                              ).show();
+                            }
+                          },
                           child: Text("Forgot Password?",
                               textAlign: TextAlign.right,
                               style: TextStyle(fontSize: 14))),
