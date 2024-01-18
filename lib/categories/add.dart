@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:uni_hub/widgets/customtextformfieldadd.dart';
+import 'package:uni_hub/widgets/my_button.dart';
 
 class AddCategory extends StatefulWidget {
   const AddCategory({super.key});
@@ -37,7 +38,8 @@ class _AddCategoryState extends State<AddCategory> {
                   }
                 },
               ),
-            )
+            ),
+            MyButton(color: Colors.black, title: Text('Add'), onPressed: (){})
           ],
         ),
       ),
