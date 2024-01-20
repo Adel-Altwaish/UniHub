@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_hub/categories/add.dart';
-import 'package:uni_hub/homepage.dart';
+import 'package:uni_hub/pages/homepage.dart';
 import 'package:uni_hub/screen/sign_in_screen.dart';
 import 'package:uni_hub/screen/sign_up_screen.dart';
 
