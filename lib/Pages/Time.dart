@@ -1,6 +1,10 @@
+// ignore_for_file: file_names, library_private_types_in_public_api, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class Time extends StatefulWidget {
+  const Time({super.key});
+
   @override
   _TimeState createState() => _TimeState();
 }
