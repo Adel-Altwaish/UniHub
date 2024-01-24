@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: (FirebaseAuth.instance.currentUser != null &&
               FirebaseAuth.instance.currentUser!.emailVerified)
-          ? const HomePage()
-          : TasksScreen(),
+          ? HomePage()
+          : SignInScreen(),
       routes: {
         'SignUp': (context) => SignUpScreen(),
         'LogIn': (context) => SignInScreen(),
