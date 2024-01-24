@@ -84,7 +84,23 @@ class TasksScreen extends StatelessWidget {
                     Radius.circular(20),
                   ),
                 ),
-                child: TasksList(),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned.fill(
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.8),
+              BlendMode.srcATop,
+            ),
+            child: Image.asset(
+              'images/logo.png',
+            ),
+          ),
+        ),
+                    TasksList(),
+                  ],
+                ),
               ),
             ),
           ],
