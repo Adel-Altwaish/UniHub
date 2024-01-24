@@ -1,6 +1,6 @@
 // task_data.dart
 
-// ignore_for_file: unnecessary_null_comparison, avoid_print
+// ignore_for_file: unnecessary_null_comparison, avoid_print, depend_on_referenced_packages
 
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';

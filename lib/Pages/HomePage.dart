@@ -160,7 +160,7 @@ class HomePage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Time()));
+                    context, MaterialPageRoute(builder: (context) => Alarm()));
               },
               icon: Container(
                 decoration: BoxDecoration(
@@ -182,31 +182,31 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
-              },
-              icon: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(30),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    )
-                  ],
-                ),
-                child: Icon(
-                  Icons.home,
-                  color: Colors.black,
-                ),
-              ),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => HomePage()));
+            //   },
+            //   icon: Container(
+            //     decoration: BoxDecoration(
+            //       borderRadius: const BorderRadius.all(
+            //         Radius.circular(30),
+            //       ),
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color: Colors.grey.withOpacity(0.5),
+            //           spreadRadius: 5,
+            //           blurRadius: 10,
+            //           offset: const Offset(0, 3),
+            //         )
+            //       ],
+            //     ),
+            //     child: Icon(
+            //       Icons.home,
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

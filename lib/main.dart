@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_hub/Pages/time.dart';
 import 'package:uni_hub/categories/add.dart';
 import 'package:uni_hub/pages/homepage.dart';
 import 'package:uni_hub/screen/sign_in_screen.dart';
@@ -21,8 +22,10 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
   await Hive.openBox<TaskModel>(kTasksBox);
+  if (!Hive.isAdapterRegistered(1)) {
+    Hive.registerAdapter(AlarmModelAdapter());
+  }
 
-  // Firebase initialization (copy from main2.dart)
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: FirebaseOptions(
@@ -47,9 +50,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        // Define your theme here
-      ),
       debugShowCheckedModeBanner: false,
       home: (FirebaseAuth.instance.currentUser != null &&
               FirebaseAuth.instance.currentUser!.emailVerified)
@@ -60,7 +60,8 @@ class MyApp extends StatelessWidget {
         'LogIn': (context) => SignInScreen(),
         'HomePage': (context) =>  HomePage(),
         'AddCategory': (context) => AddCategory(),
-        'TaskScreen' :(context) => TasksScreen()
+        'TaskScreen' :(context) => TasksScreen(),
+        'Alarm' : (context) => Alarm(),
       },
     );
   }

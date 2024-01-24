@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:hive/hive.dart';
 
 part 'task_model.g.dart';
