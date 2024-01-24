@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uni_hub/Pages/book.dart';
-import 'package:uni_hub/Pages/daily_tasks.dart';
 import 'package:uni_hub/Pages/schedule.dart';
 import 'package:uni_hub/Pages/time.dart';
+import 'package:uni_hub/todo/screens/tasks_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -88,7 +88,7 @@ class HomePage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyToDoList()),
+                    MaterialPageRoute(builder: (context) => TasksScreen()),
                   );
                 },
                 child: Container(

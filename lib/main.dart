@@ -1,17 +1,28 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print
+// ignore_for_file: prefer_const_constructors
 
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:uni_hub/categories/add.dart';
 import 'package:uni_hub/pages/homepage.dart';
 import 'package:uni_hub/screen/sign_in_screen.dart';
 import 'package:uni_hub/screen/sign_up_screen.dart';
+import 'package:uni_hub/todo/moudels/constant.dart';
+import 'package:uni_hub/todo/moudels/task_data.dart';
+import 'package:uni_hub/todo/moudels/task_model.dart';
+import 'package:uni_hub/todo/screens/tasks_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskModelAdapter());
+  await Hive.openBox<TaskModel>(kTasksBox);
+
+  // Firebase initialization (copy from main2.dart)
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: FirebaseOptions(
@@ -20,55 +31,36 @@ void main() async {
               messagingSenderId: "223401995351",
               projectId: "unihub-eecad"))
       : await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TaskData()..init()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
-  MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-      }
-    });
-    super.initState();
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.grey,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-        ),
+        // Define your theme here
       ),
       debugShowCheckedModeBanner: false,
       home: (FirebaseAuth.instance.currentUser != null &&
               FirebaseAuth.instance.currentUser!.emailVerified)
-          ? HomePage()
-          : SignInScreen(),
+          ? const HomePage()
+          : TasksScreen(),
       routes: {
         'SignUp': (context) => SignUpScreen(),
         'LogIn': (context) => SignInScreen(),
-        'HomePage': (context) => HomePage(),
+        'HomePage': (context) =>  HomePage(),
         'AddCategory': (context) => AddCategory(),
+        'TaskScreen' :(context) => TasksScreen()
       },
     );
   }
