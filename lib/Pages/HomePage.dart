@@ -47,71 +47,69 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 30,
-              ),
-              CustomLogo(
-                myImage: Image.asset(
-                  'images/logo.png',
-                  width: 150,
-                  height: 150,
-                ),
-              ),
-              Container(height: 20),
-              Center(
-                child: Text(
-                  "UniHub",
-                  style: TextStyle(
-                      fontSize: 42,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic),
-                ),
-              ),
-              Container(height: 20),
-              Text(
-                'Email Address:',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic),
-              ),
-              Container(height: 10),
-              Text(
-                '${FirebaseAuth.instance.currentUser!.email}',
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              Container(height: 20),
-              Text(
-                'Username:',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic),
-              ),
-              Container(height: 10),
-              FutureBuilder<String>(
-                future: _loadUsername(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<String> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else {
-                    return Text(
-                      '${snapshot.data}',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    );
-                  }
-                },
-              ),
-            ],
+  child: Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 30,
+        ),
+        CustomLogo(
+          myImage: Image.asset(
+            'images/logo.png',
+            width: 150,
+            height: 150,
           ),
         ),
-      ),
+        Container(height: 20),
+        Center(
+          child: Text(
+            "UniHub",
+            style: TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic),
+          ),
+        ),
+        Container(height: 20),
+        Text(
+          'Email Address:',
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic),
+        ),
+        Container(height: 10),
+        Text(
+          '${FirebaseAuth.instance.currentUser!.email}',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
+        Container(height: 20),
+        Text(
+          'Username:',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic),
+        ),
+        Container(height: 10),
+        FutureBuilder<String>(
+          future: _loadUsername(),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else {
+              return Text(
+                '${snapshot.data ?? FirebaseAuth.instance.currentUser?.displayName ?? 'Not logged in'}',
+              );
+            }
+          },
+        ),
+      ],
+    ),
+  ),
+),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 150, horizontal: 10),
         child: GridView.count(
