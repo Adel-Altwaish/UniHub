@@ -70,12 +70,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 30,
                     ),
                     CustomLogo(
-                        myImage: Image.asset(
-                      'images/logo.png',
-                      width: 150,
-                      // height: 150,
-                      // fit: BoxFit.fill,
-                    )),
+                      myImage: Image.asset(
+                        'images/logo.png',
+                        width: 150,
+                        // height: 150,
+                        // fit: BoxFit.fill,
+                      ),
+                    ),
                     Container(height: 20),
                     Text('Login',
                         style: TextStyle(

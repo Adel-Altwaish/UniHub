@@ -1,6 +1,5 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, unused_local_variable, use_build_context_synchronously, avoid_print, body_might_complete_normally_nullable, avoid_single_cascade_in_expression_statements
-
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_hub/widgets/custom_logo.dart';
@@ -9,7 +8,6 @@ import 'package:uni_hub/widgets/text_form_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
-
   @override
   State<SignUpScreen> createState() => _SignInScreenState();
 }
@@ -19,16 +17,20 @@ class _SignInScreenState extends State<SignUpScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
-
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
+  void _saveUsername() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance.collection('users').doc(user?.uid).set({
+      'username': username.text,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-          // title: const Text('UniHub'),
-          ),
+      ),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -46,8 +48,6 @@ class _SignInScreenState extends State<SignUpScreen> {
                         myImage: Image.asset(
                       'images/logo.png',
                       width: 150,
-                      // height: 150,
-                      // fit: BoxFit.fill,
                     )),
                     Container(height: 10),
                     Text('Register',
@@ -144,6 +144,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                       );
                       FirebaseAuth.instance.currentUser!
                           .sendEmailVerification();
+                      _saveUsername(); // Save the username after the user has signed up
                       Navigator.of(context).pushReplacementNamed('LogIn');
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'weak-password') {

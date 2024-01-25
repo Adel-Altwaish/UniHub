@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_hub/Pages/time.dart';
+import 'package:uni_hub/Pages/alarm.dart';
 import 'package:uni_hub/categories/add.dart';
 import 'package:uni_hub/pages/homepage.dart';
 import 'package:uni_hub/screen/sign_in_screen.dart';
@@ -22,18 +22,9 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
   await Hive.openBox<TaskModel>(kTasksBox);
-  if (!Hive.isAdapterRegistered(1)) {
-    Hive.registerAdapter(AlarmModelAdapter());
-  }
 
-  Platform.isAndroid
-      ? await Firebase.initializeApp(
-          options: FirebaseOptions(
-              apiKey: "AIzaSyA34vYH8_FS14Pffqis4MtN0kazNfx5lHA",
-              appId: "1:223401995351:android:14aeb15fc9ec2ca2160712",
-              messagingSenderId: "223401995351",
-              projectId: "unihub-eecad"))
-      : await Firebase.initializeApp();
+  await initializeFirebase();
+
   runApp(
     MultiProvider(
       providers: [
@@ -42,6 +33,19 @@ void main() async {
       child: const MyApp(),
     ),
   );
+}
+
+Future<void> initializeFirebase() async {
+  if (Platform.isAndroid) {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: "AIzaSyA34vYH8_FS14Pffqis4MtN0kazNfx5lHA",
+            appId: "1:223401995351:android:14aeb15fc9ec2ca2160712",
+            messagingSenderId: "223401995351",
+            projectId: "unihub-eecad"));
+  } else {
+    await Firebase.initializeApp();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -56,13 +60,22 @@ class MyApp extends StatelessWidget {
           ? HomePage()
           : SignInScreen(),
       routes: {
-        'SignUp': (context) => SignUpScreen(),
-        'LogIn': (context) => SignInScreen(),
-        'HomePage': (context) =>  HomePage(),
-        'AddCategory': (context) => AddCategory(),
-        'TaskScreen' :(context) => TasksScreen(),
-        'Alarm' : (context) => Alarm(),
+        Routes.signUp: (context) => SignUpScreen(),
+        Routes.logIn: (context) => SignInScreen(),
+        Routes.homePage: (context) => HomePage(),
+        Routes.addCategory: (context) => AddCategory(),
+        Routes.taskScreen: (context) => TasksScreen(),
+        Routes.alarm:(context) => Alarm(),
       },
     );
   }
+}
+
+class Routes {
+  static const signUp = 'SignUp';
+  static const logIn = 'LogIn';
+  static const homePage = 'HomePage';
+  static const addCategory = 'AddCategory';
+  static const taskScreen = 'TaskScreen';
+  static const alarm = 'Alarm';
 }
