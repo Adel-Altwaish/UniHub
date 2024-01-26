@@ -2,6 +2,7 @@
 
 // ignore_for_file: unnecessary_null_comparison, avoid_print, depend_on_referenced_packages
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:uni_hub/todo/moudels/task_model.dart';
@@ -10,9 +11,15 @@ class TaskData extends ChangeNotifier {
   late Box<TaskModel>? taskBox;
 
   Future<void> openHiveBox() async {
-    taskBox = await Hive.openBox<TaskModel>('tasks_box');
+  var user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    var email = user.email;
+    taskBox = await Hive.openBox<TaskModel>('tasks_box_$email');
     notifyListeners();
+  } else {
+    print('FirebaseAuth.instance.currentUser is null');
   }
+}
 
   Future<void> init() async {
     await openHiveBox();
