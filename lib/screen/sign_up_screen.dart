@@ -146,7 +146,7 @@ class _SignInScreenState extends State<SignUpScreen> {
                       );
                       FirebaseAuth.instance.currentUser!
                           .sendEmailVerification();
-                      _saveUsername(); // Save the username after the user has signed up
+                      _saveUsername();
                       Navigator.of(context).pushReplacementNamed('LogIn');
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'weak-password') {

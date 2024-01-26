@@ -18,6 +18,6 @@ class TaskModel extends HiveObject {
 
   void doneChange() {
     isDone = !isDone;
-    save(); // Save the changes to Hive
+    save();
   }
 }

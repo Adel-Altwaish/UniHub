@@ -22,23 +22,19 @@ class _SignInScreenState extends State<SignInScreen> {
   GlobalKey<FormState> formState = GlobalKey<FormState>();
 
   Future signInWithGoogle() async {
-    // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     if (googleUser == null) {
       return;
     }
-    // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
-    // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
 
-    // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
 
     Navigator.of(context).pushNamedAndRemoveUntil('HomePage', (route) => false);
@@ -73,8 +69,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       myImage: Image.asset(
                         'images/logo.png',
                         width: 150,
-                        // height: 150,
-                        // fit: BoxFit.fill,
                       ),
                     ),
                     Container(height: 20),
@@ -118,39 +112,42 @@ class _SignInScreenState extends State<SignInScreen> {
                       padding: EdgeInsets.only(top: 5, bottom: 5),
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                          onPressed: () async {
-                            if (email.text == '') {
-                              AwesomeDialog(
-                                context: context,
-                                animType: AnimType.rightSlide,
-                                dialogType: DialogType.error,
-                                title: 'Error',
-                                desc: 'Please Enter your email',
-                              ).show();
-                            }
-                            try {
-                              await FirebaseAuth.instance
-                                  .sendPasswordResetEmail(email: email.text);
-                              AwesomeDialog(
-                                context: context,
-                                animType: AnimType.rightSlide,
-                                dialogType: DialogType.success,
-                                title: 'Success',
-                                desc: 'Reset Password email Has been sent!',
-                              ).show();
-                            } catch (e) {
-                              AwesomeDialog(
-                                context: context,
-                                animType: AnimType.rightSlide,
-                                dialogType: DialogType.error,
-                                title: 'Error',
-                                desc: 'There is no account for this email!',
-                              ).show();
-                            }
-                          },
-                          child: Text("Forgot Password?",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(fontSize: 14))),
+                        onPressed: () async {
+                          if (email.text == '') {
+                            AwesomeDialog(
+                              context: context,
+                              animType: AnimType.rightSlide,
+                              dialogType: DialogType.error,
+                              title: 'Error',
+                              desc: 'Please Enter your email',
+                            ).show();
+                          }
+                          try {
+                            await FirebaseAuth.instance
+                                .sendPasswordResetEmail(email: email.text);
+                            AwesomeDialog(
+                              context: context,
+                              animType: AnimType.rightSlide,
+                              dialogType: DialogType.success,
+                              title: 'Success',
+                              desc: 'Reset Password email Has been sent!',
+                            ).show();
+                          } catch (e) {
+                            AwesomeDialog(
+                              context: context,
+                              animType: AnimType.rightSlide,
+                              dialogType: DialogType.error,
+                              title: 'Error',
+                              desc: 'There is no account for this email!',
+                            ).show();
+                          }
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -167,8 +164,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       if (credential.user!.emailVerified) {
                         Navigator.of(context).pushReplacementNamed('HomePage');
                       } else {
-                        // FirebaseAuth.instance.currentUser!
-                        //     .sendEmailVerification();
                         AwesomeDialog(
                           context: context,
                           animType: AnimType.rightSlide,
@@ -204,8 +199,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 },
               ),
               Container(height: 20),
-              // Text('Or Login With', textAlign: TextAlign.center),
-              // Container(height: 20),
               MyButton(
                 color: Color.fromARGB(255, 188, 49, 39),
                 onPressed: () {

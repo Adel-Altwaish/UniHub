@@ -50,7 +50,7 @@ class _BooksPageState extends State<BooksPage> {
                           child: Image.asset(
                             books[index].imagePath,
                             width: 70,
-                            height: 150, // Adjust the height as needed
+                            height: 150,
                           ),
                         ),
                         title: Text(

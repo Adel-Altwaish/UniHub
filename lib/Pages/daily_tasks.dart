@@ -31,7 +31,6 @@ class _MyToDoListState extends State<MyToDoList> {
                   trailing: IconButton(
                     icon: Icon(Icons.check),
                     onPressed: () {
-                      // Mark task as completed
                       setState(() {
                         tasks.removeAt(index);
                       });
@@ -51,7 +50,6 @@ class _MyToDoListState extends State<MyToDoList> {
                       hintText: 'Add a task...',
                     ),
                     onSubmitted: (newTask) {
-                      // Add new task
                       setState(() {
                         tasks.add(newTask);
                       });
@@ -61,17 +59,15 @@ class _MyToDoListState extends State<MyToDoList> {
                 IconButton(
                   icon: Icon(Icons.add),
                   onPressed: () {
-                    // Add new task
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        String newTask = ''; // Define the newTask variable
+                        String newTask = '';
 
                         return AlertDialog(
                           title: Text('Add a Task'),
                           content: TextField(
                             onChanged: (taskInput) {
-                              // Handle the task input
                               newTask = taskInput;
                             },
                           ),
@@ -84,7 +80,6 @@ class _MyToDoListState extends State<MyToDoList> {
                             ),
                             TextButton(
                               onPressed: () {
-                                // Add new task
                                 Navigator.of(context).pop();
                                 setState(() {
                                   tasks.add(newTask);
