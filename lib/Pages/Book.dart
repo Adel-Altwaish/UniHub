@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_brace_in_string_interps, library_private_types_in_public_api, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, no_leading_underscores_for_local_identifiers, avoid_print
+// ignore_for_file: unnecessary_brace_in_string_interps, library_private_types_in_public_api, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, no_leading_underscores_for_local_identifiers, avoid_print, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:io';
@@ -12,16 +12,18 @@ class Book {
   final String title;
   final String description;
   final String imagePath;
-  final String pdfPath;
+  final String pdfPathDownload;
   final String information;
+  final String pdfAfterDownload;
   bool isExpanded;
 
   Book({
     required this.title,
     required this.description,
     required this.imagePath,
-    required this.pdfPath,
+    required this.pdfPathDownload,
     required this.information,
+    required this.pdfAfterDownload,
     this.isExpanded = false,
   });
 }
@@ -36,23 +38,23 @@ class BooksPage extends StatefulWidget {
 class _BooksPageState extends State<BooksPage> {
   List<Book> books = [
     Book(
-        title: 'Book1',
-        description: 'description1 ',
-        imagePath: 'images/book1.png',
-        pdfPath: 'books/book1.pdf',
-        information: 'information of book 1'),
+      title: 'Flutter',
+      description: 'Learn Flutter Basics',
+      imagePath: 'images/book1.png',
+      pdfPathDownload: 'assets/Flutter.pdf',
+      pdfAfterDownload: '/data/user/0/com.example.uni_hub/app_flutter/flutter.pdf',
+      information:
+          "Author: Adel Abobaker\nSection: Programming languages [edit]\nPages: 163\nFile size: 12.0 MB",
+    ),
     Book(
-        title: 'Book2',
-        description: 'description2',
-        imagePath: 'images/book1.png',
-        pdfPath: 'books/book1.pdf',
-        information: 'information of book 2'),
-    Book(
-        title: 'Book3',
-        description: 'description3',
-        imagePath: 'images/book1.png',
-        pdfPath: 'books/book1.pdf',
-        information: 'information of book 3'),
+      title: 'English Made Easy',
+      description: 'Learn English Through Pictures',
+      imagePath: 'images/book2.png',
+      pdfPathDownload: 'assets/English.pdf',
+      pdfAfterDownload: '/data/user/0/com.example.uni_hub/app_flutter/ُenglish made easy.pdf',
+      information:
+          "Author: Jonathan Crichton\nSection: English language learning\nPages: 193\nFile size: 34.1 MB",
+    ),
   ];
 
   @override
@@ -60,7 +62,7 @@ class _BooksPageState extends State<BooksPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Books'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.grey,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -79,7 +81,7 @@ class _BooksPageState extends State<BooksPage> {
                   ExpansionPanel(
                     headerBuilder: (BuildContext context, bool isExpanded) {
                       return ListTile(
-                        leading: Image.asset(books[index].imagePath),
+                        leading: Image.asset(books[index].imagePath,width: 70),
                         title: Text(books[index].title),
                         subtitle: Text(books[index].description),
                       );
@@ -93,25 +95,72 @@ class _BooksPageState extends State<BooksPage> {
                         TextButton(
                           child: Text('Read Book'),
                           onPressed: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => PDFScreen(books[index].pdfPath),
-                              ),
-                            );
+                            try {
+                              final file = File(books[index].pdfAfterDownload);
+                              if (await file.exists()) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => PDFScreen(file.path),
+                                  ),
+                                );
+                              } else {
+                                print('File does not exist: ${file.path}');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'File does not exist. Please download the book.'),
+                                  ),
+                                );
+                              }
+                            } catch (e, stackTrace) {
+                              print('Error opening PDF: $e');
+                              print('Stack trace: $stackTrace');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Error opening PDF. Please try again.'),
+                                ),
+                              );
+                            }
                           },
                         ),
                         TextButton(
                           child: Text('Download Book'),
                           onPressed: () async {
-                            final byteData =
-                                await rootBundle.load(books[index].pdfPath);
                             final directory =
                                 await getApplicationDocumentsDirectory();
                             final file = File(
-                                '${directory.path}/${books[index].title}.pdf');
-                            await file
-                                .writeAsBytes(byteData.buffer.asUint8List());
+                                '${directory.path}/${books[index].title.toLowerCase()}.pdf');
+                            if (!await file.exists()) {
+                              try {
+                                final byteData =
+                                    await rootBundle.load(books[index].pdfPathDownload);
+                                await file.writeAsBytes(
+                                    byteData.buffer.asUint8List());
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Download complete.'),
+                                  ),
+                                );
+                              } catch (e, stackTrace) {
+                                print('Error downloading PDF: $e');
+                                print('Stack trace: $stackTrace');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'Error downloading PDF. Please try again.'),
+                                  ),
+                                );
+                              }
+                            } else {
+                              print('File already exists: ${file.path}');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('File already downloaded.'),
+                                ),
+                              );
+                            }
                           },
                         ),
                       ],
