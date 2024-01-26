@@ -1,32 +1,12 @@
-// ignore_for_file: unnecessary_brace_in_string_interps, library_private_types_in_public_api, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, no_leading_underscores_for_local_identifiers, avoid_print, use_build_context_synchronously
+// ignore_for_file: unnecessary_brace_in_string_interps, library_private_types_in_public_api, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, no_leading_underscores_for_local_identifiers, avoid_print, use_build_context_synchronously, sized_box_for_whitespace
 
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
-
-class Book {
-  final String title;
-  final String description;
-  final String imagePath;
-  final String pdfPathDownload;
-  final String information;
-  final String pdfAfterDownload;
-  bool isExpanded;
-
-  Book({
-    required this.title,
-    required this.description,
-    required this.imagePath,
-    required this.pdfPathDownload,
-    required this.information,
-    required this.pdfAfterDownload,
-    this.isExpanded = false,
-  });
-}
+import 'package:uni_hub/categories/books_list.dart';
+import 'package:uni_hub/widgets/pdf_viewer.dart';
 
 class BooksPage extends StatefulWidget {
   const BooksPage({super.key});
@@ -36,26 +16,7 @@ class BooksPage extends StatefulWidget {
 }
 
 class _BooksPageState extends State<BooksPage> {
-  List<Book> books = [
-    Book(
-      title: 'Flutter',
-      description: 'Learn Flutter Basics',
-      imagePath: 'images/book1.png',
-      pdfPathDownload: 'assets/Flutter.pdf',
-      pdfAfterDownload: '/data/user/0/com.example.uni_hub/app_flutter/flutter.pdf',
-      information:
-          "Author: Adel Abobaker\nSection: Programming languages [edit]\nPages: 163\nFile size: 12.0 MB",
-    ),
-    Book(
-      title: 'English Made Easy',
-      description: 'Learn English Through Pictures',
-      imagePath: 'images/book2.png',
-      pdfPathDownload: 'assets/English.pdf',
-      pdfAfterDownload: '/data/user/0/com.example.uni_hub/app_flutter/ُenglish made easy.pdf',
-      information:
-          "Author: Jonathan Crichton\nSection: English language learning\nPages: 193\nFile size: 34.1 MB",
-    ),
-  ];
+  List<Book> books = booksList;
 
   @override
   Widget build(BuildContext context) {
@@ -73,17 +34,46 @@ class _BooksPageState extends State<BooksPage> {
               padding: const EdgeInsets.all(8.0),
               child: ExpansionPanelList(
                 expansionCallback: (int item, bool status) {
-                  setState(() {
-                    books[index].isExpanded = !books[index].isExpanded;
-                  });
+                  setState(
+                    () {
+                      books[index].isExpanded = !books[index].isExpanded;
+                    },
+                  );
                 },
                 children: [
                   ExpansionPanel(
                     headerBuilder: (BuildContext context, bool isExpanded) {
                       return ListTile(
-                        leading: Image.asset(books[index].imagePath,width: 70),
-                        title: Text(books[index].title),
-                        subtitle: Text(books[index].description),
+                        contentPadding: EdgeInsets.all(16),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            books[index].imagePath,
+                            width: 70,
+                            height: 150, // Adjust the height as needed
+                          ),
+                        ),
+                        title: Text(
+                          books[index].title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 6),
+                            Text(
+                              books[index].description,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     },
                     body: Column(
@@ -91,6 +81,25 @@ class _BooksPageState extends State<BooksPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(books[index].information),
+                        ),
+                        Container(
+                          height: 100,
+                          width: double.infinity,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Positioned.fill(
+                                child: ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.white.withOpacity(0.8),
+                                      BlendMode.srcATop),
+                                  child: Image.asset(
+                                    'images/logo.png',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         TextButton(
                           child: Text('Read Book'),
@@ -134,8 +143,8 @@ class _BooksPageState extends State<BooksPage> {
                                 '${directory.path}/${books[index].title.toLowerCase()}.pdf');
                             if (!await file.exists()) {
                               try {
-                                final byteData =
-                                    await rootBundle.load(books[index].pdfPathDownload);
+                                final byteData = await rootBundle
+                                    .load(books[index].pdfPathDownload);
                                 await file.writeAsBytes(
                                     byteData.buffer.asUint8List());
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -173,50 +182,6 @@ class _BooksPageState extends State<BooksPage> {
           },
         ),
       ),
-    );
-  }
-}
-
-class PDFScreen extends StatefulWidget {
-  final String pathPDF;
-  PDFScreen(this.pathPDF);
-
-  @override
-  _PDFScreenState createState() => _PDFScreenState();
-}
-
-class _PDFScreenState extends State<PDFScreen> {
-  int? pages;
-  bool isReady = false;
-  final Completer<PDFViewController> _controller =
-      Completer<PDFViewController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return PDFView(
-      filePath: widget.pathPDF,
-      enableSwipe: true,
-      swipeHorizontal: true,
-      autoSpacing: false,
-      pageFling: false,
-      onRender: (_pages) {
-        setState(() {
-          pages = _pages;
-          isReady = true;
-        });
-      },
-      onError: (error) {
-        print(error.toString());
-      },
-      onPageError: (page, error) {
-        print('$page: ${error.toString()}');
-      },
-      onViewCreated: (PDFViewController pdfViewController) {
-        _controller.complete(pdfViewController);
-      },
-      onPageChanged: (int? page, int? total) {
-        print('page change: $page/$total');
-      },
     );
   }
 }

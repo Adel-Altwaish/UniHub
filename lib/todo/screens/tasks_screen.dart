@@ -52,7 +52,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 );
               },
-              backgroundColor: Colors.grey,
+              backgroundColor: Colors.grey[400],
               child: Icon(Icons.add),
             ),
             backgroundColor: Colors.grey,
