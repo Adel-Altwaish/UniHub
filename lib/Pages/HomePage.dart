@@ -115,35 +115,35 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8),
-                BlendMode.srcATop,
-              ),
-              child: Image.asset('images/logo.png'),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.8),
+              BlendMode.srcATop,
             ),
-            Center(
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: [
-                  _buildCard(
-                      context, 'Add schedule', Schedule(), Icons.schedule),
-                  _buildCard(context, 'Tasks', TasksScreen(), Icons.task),
-                  _buildCard(context, 'Clock', Clock(), Icons.alarm),
-                  _buildCard(
-                      context, 'Books', BooksPage(), Icons.menu_book_sharp),
-                  _buildCard(context, 'Coming Soon...', ComingSoon(), Icons.android),
-                  _buildCard(context, 'Coming Soon...', ComingSoon(), Icons.android),
-                ],
-              ),
+            child: Image.asset('images/logo.png'),
+          ),
+          Center(
+            child: GridView.count(
+              padding: EdgeInsets.only(top: 40),
+              crossAxisCount: 2,
+              children: [
+                _buildCard(context, 'Tasks', TasksScreen(), Icons.task),
+                _buildCard(
+                    context, 'Add schedule', Schedule(), Icons.schedule),
+                _buildCard(context, 'Clock', Clock(), Icons.alarm),
+                _buildCard(
+                    context, 'Books', BooksPage(), Icons.menu_book_sharp),
+                _buildCard(
+                    context, 'Coming Soon...', ComingSoon(), Icons.android),
+                _buildCard(
+                    context, 'Coming Soon...', ComingSoon(), Icons.android),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -151,8 +151,8 @@ class HomePage extends StatelessWidget {
   Widget _buildCard(
       BuildContext context, String title, Widget page, IconData icon) {
     return Card(
+      // color: Colors.white60,
       elevation: 20.0,
-      shadowColor: Colors.black,
       margin: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
