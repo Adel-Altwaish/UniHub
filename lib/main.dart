@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_hub/Pages/alarm.dart';
-import 'package:uni_hub/categories/add.dart';
 import 'package:uni_hub/pages/homepage.dart';
 import 'package:uni_hub/screen/sign_in_screen.dart';
 import 'package:uni_hub/screen/sign_up_screen.dart';
@@ -64,9 +63,8 @@ class MyApp extends StatelessWidget {
         Routes.signUp: (context) => SignUpScreen(),
         Routes.logIn: (context) => SignInScreen(),
         Routes.homePage: (context) => HomePage(),
-        Routes.addCategory: (context) => AddCategory(),
         Routes.taskScreen: (context) => TasksScreen(),
-        Routes.alarm:(context) => Alarm(),
+        Routes.alarm: (context) => Alarm(),
       },
     );
   }
@@ -76,7 +74,6 @@ class Routes {
   static const signUp = 'SignUp';
   static const logIn = 'LogIn';
   static const homePage = 'HomePage';
-  static const addCategory = 'AddCategory';
   static const taskScreen = 'TaskScreen';
   static const alarm = 'Alarm';
 }
