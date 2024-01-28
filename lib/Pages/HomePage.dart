@@ -151,7 +151,7 @@ class HomePage extends StatelessWidget {
   Widget _buildCard(
       BuildContext context, String title, Widget page, IconData icon) {
     return Card(
-      // color: Colors.white60,
+      color: Colors.white24,
       elevation: 20.0,
       margin: const EdgeInsets.all(8.0),
       child: InkWell(
