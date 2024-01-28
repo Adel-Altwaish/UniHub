@@ -151,6 +151,8 @@ class HomePage extends StatelessWidget {
   Widget _buildCard(
       BuildContext context, String title, Widget page, IconData icon) {
     return Card(
+      elevation: 20.0,
+      shadowColor: Colors.black,
       margin: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
@@ -166,8 +168,9 @@ class HomePage extends StatelessWidget {
           children: [
             Tooltip(
               message: title,
-              child: Icon(icon, size: 50.0),
+              child: Icon(icon, size: 60.0),
             ),
+            Container(height: 10),
             Text(title, style: Theme.of(context).textTheme.headline6),
           ],
         ),
